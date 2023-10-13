@@ -1,11 +1,22 @@
-const products = [];
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request) {
-  return Response.json({ products: [] }, { status: 200 });
+  const posts = await prisma.post.findMany();
+
+  return Response.json({ posts }, { status: 200 });
 }
 
 export async function POST(request: Request) {
-  const res = await request.json();
+  const res: Prisma.PostUncheckedCreateInput = await request.json();
 
-  return Response.json({ res }, { status: 201 });
+  const post = await prisma.post.create({
+    data: {
+      title: res.title,
+      content: res.content,
+      authorId: res.authorId,
+    },
+  });
+
+  return Response.json({ post }, { status: 201 });
 }
