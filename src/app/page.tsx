@@ -1,9 +1,15 @@
 import { api } from "@/lib/api";
 
 async function getData() {
-  const { data } = await api.get("/posts");
+  try {
+    const { data } = await api.get("/posts");
 
-  return data;
+    return data;
+  } catch (error) {
+    console.log("error::", error);
+
+    // throw error;
+  }
 }
 
 export default async function Home() {
