@@ -1,23 +1,37 @@
-// import { prisma } from "@/lib/prisma";
-// import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
       type: "credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req): Promise<any> {
         console.log("credentials::", credentials);
 
-        const user = { id: 1, name: "Admin" };
+        if (!credentials) {
+          return null;
+        }
+
+        const { email, password } = credentials;
+
+        const user = await prisma.user.findUnique({
+          where: {
+            email,
+            password,
+          },
+          select: {
+            email: true,
+          },
+        });
+
+        console.log("user::", user);
 
         if (user) {
           return user;
