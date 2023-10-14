@@ -1,5 +1,9 @@
 import { Footer, Header } from "@/components/sections";
-import { AuthProvider, QueryProvider } from "@/lib/components";
+import {
+  AuthProvider,
+  QueryProvider,
+  SnackbarProvider,
+} from "@/lib/components";
 import { ThemeRegistry } from "@/lib/mui";
 import { Box } from "@mui/material";
 import type { Metadata } from "next";
@@ -7,7 +11,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "React Developer Experience",
   description: "Code faster with React",
-  openGraph: {
+  /* openGraph: {
     type: "website",
     locale: "en_IE",
     url: "https://reactdx.com",
@@ -20,7 +24,7 @@ export const metadata: Metadata = {
         alt: "React Developer Experience",
       },
     ],
-  },
+  }, */
 };
 
 export default function RootLayout({
@@ -34,11 +38,13 @@ export default function RootLayout({
         <ThemeRegistry>
           <QueryProvider>
             <AuthProvider>
-              <Box display="flex" flexDirection="column" minHeight="100vh">
-                <Header />
-                <Box flexGrow={1}>{children}</Box>
-                <Footer />
-              </Box>
+              <SnackbarProvider>
+                <Box display="flex" flexDirection="column" minHeight="100vh">
+                  <Header />
+                  <Box flexGrow={1}>{children}</Box>
+                  <Footer />
+                </Box>
+              </SnackbarProvider>
             </AuthProvider>
           </QueryProvider>
         </ThemeRegistry>

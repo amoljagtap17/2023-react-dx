@@ -46,6 +46,7 @@ export function Header() {
             <Box display="flex">
               {pages.map((page) => (
                 <Link
+                  key={page.label}
                   color="inherit"
                   href={page.href}
                   underline="none"

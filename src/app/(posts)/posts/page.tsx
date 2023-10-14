@@ -1,11 +1,5 @@
-"use client";
+import { PostsContainer } from "@/components/sections";
 
-import { withFetch } from "@/lib/query";
-
-function PostPage({ data }: any) {
-  console.log("data::", data);
-
-  return <h1>Post Page</h1>;
+export default function PostPage() {
+  return <PostsContainer />;
 }
-
-export default withFetch("/posts")(PostPage);

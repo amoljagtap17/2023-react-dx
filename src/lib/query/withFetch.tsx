@@ -1,5 +1,7 @@
-import { CircularProgress } from "@/components/lib";
-import { Box } from "@mui/material";
+"use client";
+
+// import { CircularProgress } from "@/components/lib/CircularProgress";
+import { Box, CircularProgress } from "@mui/material";
 import { ComponentType } from "react";
 import { useFetch } from "./useFetch";
 
