@@ -1,3 +1,3 @@
 import { createApiInstance } from "./apiInstance";
 
-export const api = createApiInstance("https://jsonplaceholder.typicode.com");
+export const api = createApiInstance("http://localhost:3000/api");
