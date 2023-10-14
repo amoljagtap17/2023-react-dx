@@ -13,8 +13,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req): Promise<any> {
-        console.log("credentials::", credentials);
-
         if (!credentials) {
           return null;
         }
@@ -22,8 +20,6 @@ export const authOptions: NextAuthOptions = {
         const { email, password } = credentials;
 
         const user = await loginService.findUniqueUser(email);
-
-        console.log("user::", user);
 
         if (user) {
           const isValidPassword = await bcryptService.verifyPassword(
