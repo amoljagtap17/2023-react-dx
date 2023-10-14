@@ -1,5 +1,5 @@
 import { Footer, Header } from "@/components/sections";
-import { AuthProvider } from "@/lib/components";
+import { AuthProvider, QueryProvider } from "@/lib/components";
 import { ThemeRegistry } from "@/lib/mui";
 import { Box } from "@mui/material";
 import type { Metadata } from "next";
@@ -32,13 +32,15 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <AuthProvider>
-            <Box display="flex" flexDirection="column" minHeight="100vh">
-              <Header />
-              <Box flexGrow={1}>{children}</Box>
-              <Footer />
-            </Box>
-          </AuthProvider>
+          <QueryProvider>
+            <AuthProvider>
+              <Box display="flex" flexDirection="column" minHeight="100vh">
+                <Header />
+                <Box flexGrow={1}>{children}</Box>
+                <Footer />
+              </Box>
+            </AuthProvider>
+          </QueryProvider>
         </ThemeRegistry>
       </body>
     </html>

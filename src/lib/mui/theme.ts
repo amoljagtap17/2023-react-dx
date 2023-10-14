@@ -25,5 +25,20 @@ export const theme = createTheme({
         square: true,
       },
     },
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+        disableFocusRipple: true,
+        disableRipple: true,
+        disableTouchRipple: true,
+        size: "large",
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          minWidth: "120px",
+        },
+      },
+    },
   },
 });
