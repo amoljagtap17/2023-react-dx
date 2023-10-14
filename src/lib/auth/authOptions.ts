@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { bcryptService, loginService } from "@/server/services";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -21,20 +21,17 @@ export const authOptions: NextAuthOptions = {
 
         const { email, password } = credentials;
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email,
-            password,
-          },
-          select: {
-            email: true,
-          },
-        });
+        const user = await loginService.findUniqueUser(email);
 
         console.log("user::", user);
 
         if (user) {
-          return user;
+          const isValidPassword = await bcryptService.verifyPassword(
+            password,
+            user.password
+          );
+
+          return isValidPassword ? { id: user.id, email: user.email } : null;
         } else {
           return null;
         }

@@ -1,11 +1,14 @@
 import { faker } from "@faker-js/faker";
 import { prisma } from "../src/lib/prisma";
+import { bcryptService } from "../src/server/services/auth/bcrypt.service";
 
 async function main() {
+  console.log("starting seed..");
+
   await prisma.user.deleteMany();
 
   const email = faker.internet.email().toLowerCase();
-  const password = "test123";
+  const password = await bcryptService.hashPassword("test123");
 
   await prisma.user.create({
     data: {
@@ -13,6 +16,8 @@ async function main() {
       password,
     },
   });
+
+  console.log("completed seed..");
 }
 
 main()
