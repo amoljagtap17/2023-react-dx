@@ -2,6 +2,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Box,
+  Button,
   Container,
   IconButton,
   Link,
@@ -10,6 +11,13 @@ import {
 } from "@mui/material";
 import NextLink from "next/link";
 import { LoginButton } from "./LoginButton";
+
+const pages = [
+  {
+    label: "Posts",
+    href: "/posts",
+  },
+];
 
 export function Header() {
   return (
@@ -35,7 +43,19 @@ export function Header() {
             >
               <Typography variant="h6">React DX</Typography>
             </Link>
-            <LoginButton />
+            <Box display="flex">
+              {pages.map((page) => (
+                <Link
+                  color="inherit"
+                  href={page.href}
+                  underline="none"
+                  component={NextLink}
+                >
+                  <Button color="inherit">{page.label}</Button>
+                </Link>
+              ))}
+              <LoginButton />
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>

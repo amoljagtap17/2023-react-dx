@@ -2,6 +2,7 @@
 
 import { DynamicForm } from "@/lib/components";
 import { Container } from "@mui/material";
+import { signIn } from "next-auth/react";
 import * as yup from "yup";
 
 const formConfig = {
@@ -24,7 +25,9 @@ const formDefaultValues = {
 
 export default function LoginPage() {
   const onSubmit = (data: any) => {
-    console.log("data::", data);
+    const { email, password } = data;
+
+    signIn("credentials", { email, password });
   };
 
   return (

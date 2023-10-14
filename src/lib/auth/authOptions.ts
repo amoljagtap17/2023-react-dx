@@ -38,4 +38,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
     maxAge: 15 * 60 * 60,
   },
+  pages: {
+    signIn: "/login",
+  },
 };
