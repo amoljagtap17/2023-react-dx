@@ -1,0 +1,25 @@
+// export { default } from "next-auth/middleware";
+
+import { withAuth } from "next-auth/middleware";
+
+export default withAuth(
+  // `withAuth` augments your `Request` with the user's token.
+  function middleware(req) {
+    console.log(req.nextauth.token);
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => token?.role === "admin",
+    },
+    pages: {
+      signIn: "/login",
+    },
+  }
+);
+
+export const config = {
+  // *: zero or more
+  // +: one or more
+  // ?: zero or one
+  matcher: ["/posts/:path*"],
+};
