@@ -1,21 +1,5 @@
-import { api } from "@/lib/api";
+import { Typography } from "@mui/material";
 
-async function getData() {
-  try {
-    const { data } = await api.get("/posts");
-
-    return data;
-  } catch (error) {
-    console.log("error::", error);
-
-    // throw error;
-  }
-}
-
-export default async function Home() {
-  const data = await getData();
-
-  console.log("data::", data.length);
-
-  return <h1>Home Page</h1>;
+export default async function HomePage() {
+  return <Typography variant="h1">Home Page!</Typography>;
 }
