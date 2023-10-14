@@ -1,12 +1,14 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
-  Button,
   Container,
   IconButton,
+  Link,
   Toolbar,
   Typography,
 } from "@mui/material";
+import NextLink from "next/link";
+import { LoginButton } from "./LoginButton";
 
 export function Header() {
   return (
@@ -22,10 +24,16 @@ export function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            React DX
-          </Typography>
-          <Button color="inherit">Login</Button>
+          <Link
+            color="inherit"
+            href="/"
+            underline="none"
+            component={NextLink}
+            sx={{ flexGrow: 1 }}
+          >
+            <Typography variant="h6">React DX</Typography>
+          </Link>
+          <LoginButton />
         </Toolbar>
       </Container>
     </AppBar>
