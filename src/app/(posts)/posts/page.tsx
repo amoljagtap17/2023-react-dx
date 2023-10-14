@@ -1,9 +1,11 @@
 "use client";
 
-import { useFetch } from "@/lib/query";
+import { withFetch } from "@/lib/query";
 
-export default function PostPage() {
-  const postsQuery = useFetch({ url: "/posts" });
+function PostPage({ data }: any) {
+  console.log("data::", data);
 
   return <h1>Post Page</h1>;
 }
+
+export default withFetch("/posts")(PostPage);
