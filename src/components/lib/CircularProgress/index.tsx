@@ -1,11 +1,10 @@
 "use client";
 
-import {
-  Box,
-  CircularProgressProps,
-  CircularProgress as MUICircularProgress,
+import Box from "@mui/material/Box";
+import MUICircularProgress, {
   circularProgressClasses,
-} from "@mui/material";
+  CircularProgressProps,
+} from "@mui/material/CircularProgress";
 
 export function CircularProgress(props: CircularProgressProps) {
   return (
