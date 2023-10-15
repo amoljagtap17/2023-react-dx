@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const id = params.id;
 
-  const post = prisma.post.findUniqueOrThrow({
+  const post = await prisma.post.findUniqueOrThrow({
     where: {
       id,
     },
@@ -23,7 +23,7 @@ export async function PATCH(
   const id = params.id;
   const data: Prisma.PostUncheckedUpdateInput = await request.json();
 
-  const post = prisma.post.update({
+  const post = await prisma.post.update({
     where: {
       id,
     },
@@ -39,7 +39,7 @@ export async function DELETE(
 ) {
   const id = params.id;
 
-  const post = prisma.post.delete({
+  const post = await prisma.post.delete({
     where: {
       id,
     },

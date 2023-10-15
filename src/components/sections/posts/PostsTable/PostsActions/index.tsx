@@ -25,8 +25,6 @@ export function PostsActions({ id }: IPostsActionsProps) {
     setAction(null);
   };
 
-  console.log("action::", action);
-
   return (
     <>
       <Stack spacing={2} direction="row">
@@ -38,7 +36,11 @@ export function PostsActions({ id }: IPostsActionsProps) {
         </IconButton>
       </Stack>
       {action === "DELETE" ? (
-        <DeleteDialog open={action === "DELETE"} handleClose={handleClose} />
+        <DeleteDialog
+          id={id}
+          open={action === "DELETE"}
+          handleClose={handleClose}
+        />
       ) : null}
     </>
   );

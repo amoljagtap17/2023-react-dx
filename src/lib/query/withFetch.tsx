@@ -6,7 +6,7 @@ import { ComponentType } from "react";
 import { useFetch } from "./useFetch";
 
 export const withFetch =
-  (url: string, params?: {}) => (Component: ComponentType) => {
+  (url: string, params?: {}) => (Component: ComponentType<any>) => {
     return (props: any) => {
       const { data, isFetching, isError, error } = useFetch({ url, params });
 

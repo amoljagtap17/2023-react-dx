@@ -1,3 +1,4 @@
+import { withMutate } from "@/lib/query";
 import {
   Button,
   Dialog,
@@ -6,13 +7,38 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import { UseMutationResult } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
 
-interface IDeleteDialogProps {
+type IDeleteDialogProps = UseMutationResult & {
+  id: string;
   open: boolean;
   handleClose: () => void;
-}
+};
 
-export function DeleteDialog({ open, handleClose }: IDeleteDialogProps) {
+function DeleteDialogComponent({
+  id,
+  open,
+  handleClose,
+  mutateAsync,
+  isLoading,
+}: IDeleteDialogProps) {
+  const handleDelete = async () => {
+    await mutateAsync(
+      { id },
+      {
+        onSuccess(_data, _variables, _context) {
+          enqueueSnackbar({
+            message: "post deleted",
+            variant: "success",
+          });
+
+          handleClose();
+        },
+      }
+    );
+  };
+
   return (
     <Dialog
       open={open}
@@ -31,10 +57,20 @@ export function DeleteDialog({ open, handleClose }: IDeleteDialogProps) {
         <Button variant="outlined" onClick={handleClose}>
           NO
         </Button>
-        <Button variant="contained" onClick={handleClose} autoFocus>
+        <Button
+          variant="contained"
+          onClick={handleDelete}
+          autoFocus
+          disabled={isLoading}
+        >
           YES
         </Button>
       </DialogActions>
     </Dialog>
   );
 }
+
+export const DeleteDialog = withMutate(
+  "/posts",
+  "DELETE"
+)(DeleteDialogComponent);

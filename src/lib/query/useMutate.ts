@@ -20,8 +20,9 @@ const patchFunction = async <T = any>(url: string, body: {}) => {
   return data;
 };
 
-const deleteFunction = async <T = any>(url: string, params?: {}) => {
-  const { data } = await api.remove<T>(url, params);
+const deleteFunction = async <T = any>(url: string, params: { id: string }) => {
+  const { id } = params;
+  const { data } = await api.remove<T>(`${url}/${id}`);
 
   return data;
 };
