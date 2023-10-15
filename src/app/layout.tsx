@@ -5,7 +5,7 @@ import {
   SnackbarProvider,
 } from "@/lib/components";
 import { ThemeRegistry } from "@/lib/mui";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -41,7 +41,9 @@ export default function RootLayout({
               <SnackbarProvider>
                 <Box display="flex" flexDirection="column" minHeight="100vh">
                   <Header />
-                  <Box flexGrow={1}>{children}</Box>
+                  <Box flexGrow={1}>
+                    <Container maxWidth="lg">{children}</Container>
+                  </Box>
                   <Footer />
                 </Box>
               </SnackbarProvider>
