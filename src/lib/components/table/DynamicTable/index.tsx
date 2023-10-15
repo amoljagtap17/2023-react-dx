@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Paper,
@@ -15,6 +17,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -31,6 +34,7 @@ export function DynamicTable<T = any>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
 
@@ -39,7 +43,7 @@ export function DynamicTable<T = any>({
   return (
     <Box sx={{ width: "100%" }}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="mui table">
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -88,7 +92,6 @@ export function DynamicTable<T = any>({
         page={pageIndex}
         SelectProps={{
           inputProps: { "aria-label": "rows per page" },
-          native: true,
         }}
         onPageChange={(_, page) => {
           table.setPageIndex(page);
@@ -97,7 +100,6 @@ export function DynamicTable<T = any>({
           const size = e.target.value ? Number(e.target.value) : 10;
           table.setPageSize(size);
         }}
-        ActionsComponent={() => <h1>page actions</h1>}
       />
     </Box>
   );

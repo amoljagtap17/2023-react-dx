@@ -7,9 +7,14 @@ import { useMemo } from "react";
 export function PostsTable({ data }: any) {
   const columns = useMemo<ColumnDef<IPost>[]>(
     () => [
-      { accessorKey: "title", header: "Title" },
-      { accessorKey: "content", header: "Content" },
       {
+        id: "title",
+        accessorKey: "title",
+        header: "Title",
+      },
+      { id: "content", accessorKey: "content", header: "Content" },
+      {
+        id: "published",
         accessorKey: "published",
         header: "Published",
         cell: ({ cell }) => {
@@ -23,6 +28,10 @@ export function PostsTable({ data }: any) {
             />
           );
         },
+      },
+      {
+        id: "actions",
+        accessorKey: "id",
       },
     ],
     []
