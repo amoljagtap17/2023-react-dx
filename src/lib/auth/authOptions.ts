@@ -1,4 +1,4 @@
-import { bcryptService, loginService } from "@/server/services";
+import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -19,21 +19,74 @@ export const authOptions: NextAuthOptions = {
 
         const { email, password } = credentials;
 
-        const user = await loginService.findUniqueUser(email);
+        const loginMutation: any = `
+          mutation Mutation($signInInput: SignInInput!) {
+            login(signInInput: $signInInput) {
+              accessToken
+            }
+          }
+        `;
 
-        if (user) {
-          const isValidPassword = await bcryptService.verifyPassword(
-            password,
-            user.password
-          );
+        axios.defaults.baseURL = process.env.GRAPHQL_ENDPOINT!;
+        axios.defaults.headers.common["Content-Type"] = "application/json";
 
-          return isValidPassword ? { id: user.id, email: user.email } : null;
+        const { data } = await axios.post("/", {
+          query: loginMutation,
+          variables: {
+            signInInput: {
+              email,
+              password,
+            },
+          },
+        });
+
+        const accessToken = data.data.login.accessToken;
+
+        console.log("user::", accessToken);
+
+        if (!accessToken) {
+          return null;
+        }
+
+        if (accessToken) {
+          return { accessToken };
         } else {
           return null;
         }
       },
     }),
   ],
+  callbacks: {
+    jwt(params) {
+      // console.log("jwt::", params);
+
+      // @ts-ignore
+      if (params.user && params.user.accessToken) {
+        // @ts-ignore
+        params.token = params.user.accessToken;
+      }
+
+      return params.token;
+    },
+    session(params) {
+      // console.log("session::", params);
+
+      return params.session;
+    },
+  },
+  jwt: {
+    async encode(params) {
+      console.log("jwt encode::", params);
+
+      // @ts-ignore
+      return params.token;
+    },
+    async decode(params) {
+      console.log("jwt decode::", params);
+
+      return params.token;
+    },
+  },
   session: {
     strategy: "jwt",
     maxAge: 15 * 60 * 60,
