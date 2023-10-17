@@ -75,15 +75,12 @@ export const authOptions: NextAuthOptions = {
     },
   },
   jwt: {
+    // @ts-ignore
     async encode(params) {
-      console.log("jwt encode::", params);
-
-      // @ts-ignore
       return params.token;
     },
+    // @ts-ignore
     async decode(params) {
-      console.log("jwt decode::", params);
-
       return params.token;
     },
   },
